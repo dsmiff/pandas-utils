@@ -29,7 +29,7 @@ def getHistogramDict(samples, variable, histdir, analyzer):
     file = r.TFile.Open(histdir)
     histDict = {sample: getHistFromFile(sample, variable, file, analyzer) for sample in samples}
     smYields = rtUtils.produceYieldsDict(histDict)
-    tbl = convertHistoToDF(smYields, variable, True)
+    tbl = convertHistoToDF(smYields, variable, False)
 
     return tbl
 

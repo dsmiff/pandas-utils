@@ -8,6 +8,7 @@ pd.set_option('display.width', 1000)
 
 ##__________________________________________________________________||
 def convertHistoToDF(infoDict, variable, assignIndexName=False):
+
     d1 = pd.DataFrame.from_dict(infoDict)
     if d1.empty:
         print("DataFrame is empty")
@@ -21,6 +22,8 @@ def convertHistoToDF(infoDict, variable, assignIndexName=False):
     
 ##__________________________________________________________________||
 def writeDFtoFile(tbl, variable, dir):
+
+    if variable is None: variable = 'out'
     if not os.path.exists(dir):
         print("Undefined output directory")
     else:        
@@ -36,7 +39,7 @@ def readTable(tbldir=None, tableString=None):
     if (tbldir and tableString) is None:
         tableString = tbldir+ 'table_{0}.txt'.format(title)
         
-    d1 = pd.read_table(tableString, delim_whitespace=False)
+    d1 = pd.read_table(tableString, delim_whitespace=True)
     
     return d1
 
