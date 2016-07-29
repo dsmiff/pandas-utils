@@ -38,7 +38,7 @@ def produceYieldsDict(histDict):
     '''
     
     yieldsDict = {process: {h.GetBinLowEdge(bin): h.Integral(bin, h.GetNbinsX()) for bin in range(1,h.GetNbinsX())} for process, h in histDict.iteritems()}
-    if not  bool(yieldsDict):
+    if not bool(yieldsDict):
         print("Dictionary not filled")
 
     return yieldsDict
