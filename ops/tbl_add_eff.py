@@ -1,3 +1,9 @@
+# Dominic Smith <dosmith@cern.ch>
+'''
+An example script to perform arithmetic on 
+Pandas DataFrames
+'''
+
 import os,sys
 import argparse
 from core.pandasCore import *
@@ -5,7 +11,7 @@ from core.pandasCore import *
 ##__________________________________________________________________||
 parser = argparse.ArgumentParser()
 parser.add_argument("-d", "--dir", help = "the path to the input table")
-parser.add_argument("-p", "--process", type = str, help = "process to split dataframe into")
+parser.add_argument("-p", "--process", type = str, default='QCD_HT', help = "process to split dataframe into")
 parser.add_argument('-o', '--outdir', default = './')
 parser.add_argument('-q', '--quiet', action = 'store_true', default = False, help = 'quiet mode')
 parser.add_argument("--reverse", action = "store_true", default = False, help = "reverse the order of the variable values for the efficiency ")
@@ -39,6 +45,7 @@ def add_eff(tbl):
     
     tbl['QCDcumn'] = tbl[::-1]['QCD_HT'].cumsum()
     tbl['QCDeff']  =  tbl['QCDcumn']/sum(tbl['QCD_HT'])
+    tbl['QCD/EWK'] = tbl['QCD_HT']/tbl['EWK']
 
     return tbl
 
@@ -46,9 +53,10 @@ def add_eff(tbl):
 def sum_cols(tbl, varname):
 
     process = args.process
-    other_processes = [column for column in tbl.columns if process.split('_')[0] not in column and column != varname]
-    tbl['ewk'] = tbl[other_processes].sum(axis=1)
-    print tbl.columns.tolist() # Need to reorder list
+    other_processes = [column for column in tbl.columns if process.split('_')[0] not in column and column != varname] if process else None
+
+    tbl['EWK'] = tbl[other_processes].sum(axis=1)
+    tbl = rearrangeColumns(tbl, varname)
 
     return tbl
 

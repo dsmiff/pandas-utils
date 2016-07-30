@@ -1,3 +1,9 @@
+# Dominic Smith <dosmith@cern.ch>
+'''
+A collection of miscellaneous functions to 
+perform Pandas operations
+'''
+
 import os
 import pandas as pd
 
@@ -7,7 +13,10 @@ pd.set_option('display.max_rows', 65536)
 pd.set_option('display.width', 1000)
 
 ##__________________________________________________________________||
-def convertHistoToDF(infoDict, variable, assignIndexName=False):
+def convertDictToDF(infoDict, variable, assignIndexName=False):
+    '''
+    Convert a python dictionary to a DataFrame
+    '''
 
     d1 = pd.DataFrame.from_dict(infoDict)
     if d1.empty:
@@ -22,20 +31,29 @@ def convertHistoToDF(infoDict, variable, assignIndexName=False):
     
 ##__________________________________________________________________||
 def writeDFtoFile(tbl, variable, dir):
+    '''
+    Write a produced DataFrame to a txt file 
+    given a variable name and output directory
+    '''
 
     if variable is None: variable = 'out'
     if not os.path.exists(dir):
         print("Undefined output directory")
     else:        
-        with open('tbl_n_'+variable+'.txt','a') as f:
+        tblName = 'tbl_n_'+variable+'.txt'
+        with open(tblName,'a') as f:
             tbl.to_string(f, index=True)
             f.write('\n')
             f.close()
-            print('DataFrame written to file')
+            print('DataFrame {} written to file'.format(dir+tblName))
     
 ##__________________________________________________________________||
 def readTable(tbldir=None, tableString=None):
-    
+    '''
+    Return a DataFrame given an input directory and 
+    txt file name
+    '''
+
     if (tbldir and tableString) is None:
         tableString = tbldir+ 'table_{0}.txt'.format(title)
         
@@ -45,6 +63,9 @@ def readTable(tbldir=None, tableString=None):
 
 ##__________________________________________________________________||
 def produceListOfTables(tbldir, variables):
+    '''
+    Return a list of txt files containing DataFrames
+    '''
     
     inFileNames = ['tbl_n_{0}.txt'.format(variable) for variable in variables]
     inFilePath  = [os.path.join(tbldir, fileName) for fileName in inFileNames]
@@ -54,3 +75,18 @@ def produceListOfTables(tbldir, variables):
 
     return inFilePath
     
+##__________________________________________________________________||
+def rearrangeColumns(tbl, varName):
+    '''
+    Reorder the arrangement of columns in a given DataFrame 
+    By construction, varName is placed first
+    '''
+
+    cols = list(tbl.columns.values)
+    varIndexList = [index for index, col in enumerate(cols) if col==varName]
+    index = varIndexList[0]
+
+    newCols = [cols[index]] + cols[:index] + cols[index+1:]
+    reordered_table = tbl[newCols]
+
+    return reordered_table

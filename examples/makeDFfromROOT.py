@@ -1,3 +1,8 @@
+# Dominic Smith <dosmith@cern.ch>
+'''
+Make a Pandas DataFrame from a ROOT histogram
+'''
+
 import os, sys
 import argparse
 import ROOT as r
@@ -16,7 +21,7 @@ args = parser.parse_args()
 
 ##__________________________________________________________________||
 def getHistFromFile(process, plot, file, analyzer):
-    
+
     hDict = rtUtils.getHistDictFromFile(plot, file, analyzer)
     name = file.GetName().split('/')[-1][:-5]
     h = hDict[name+'__'+analyzer+'__'+process+'__all__all__'+plot+'_all_all']
@@ -29,7 +34,7 @@ def getHistogramDict(samples, variable, histdir, analyzer):
     file = r.TFile.Open(histdir)
     histDict = {sample: getHistFromFile(sample, variable, file, analyzer) for sample in samples}
     smYields = rtUtils.produceYieldsDict(histDict)
-    tbl = convertHistoToDF(smYields, variable, False)
+    tbl = convertDictToDF(smYields, variable, False)
 
     return tbl
 
