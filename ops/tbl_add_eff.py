@@ -27,7 +27,6 @@ def main():
     outdir = args.outdir
     variables = ['jet40_minChi']
     tblsList = produceListOfTables(tbldir, variables)
-    print tblsList
     for tbl in tblsList:
         varname = os.path.splitext(tbl)[0].split('_')[-1]
         if 'SMS' in tbl.split("_"): prefix = '_SMS'
