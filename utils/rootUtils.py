@@ -42,4 +42,25 @@ def produceYieldsDict(histDict):
         print("Dictionary not filled")
 
     return yieldsDict
-    
+
+##__________________________________________________________________||    
+def setProcessName(process):
+    '''
+    Rewrite columns to a more convenient name
+    '''
+
+    names = process.split('_')
+    if len(names)==1: return process        
+    model = names[0].split('-')
+
+    if len(model)==1: return model[0]
+    else: model = model[1]
+
+    ranges = [range.split('-')[1] for range in names[1:-1]]
+
+    if len(ranges) != 2:
+        print("Ranges for model not created")
+
+    column_label = '{0}({1},{2})'.format(model, ranges[0], ranges[1])
+
+    return column_label
