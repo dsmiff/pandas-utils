@@ -5,6 +5,7 @@ perform Pandas operations
 '''
 
 import os
+import glob
 import pandas as pd
 
 pd.set_option('display.max_columns', None)
@@ -30,7 +31,7 @@ def convertDictToDF(infoDict, variable, assignIndexName=False):
     return d1
     
 ##__________________________________________________________________||
-def writeDFtoFile(tbl, variable, dir):
+def writeDFtoFile(tbl, variable, dir, prefix=None):
     '''
     Write a produced DataFrame to a txt file 
     given a variable name and output directory
@@ -40,7 +41,7 @@ def writeDFtoFile(tbl, variable, dir):
     if not os.path.exists(dir):
         print("Undefined output directory")
     else:        
-        tblName = 'tbl_n_'+variable+'.txt'
+        tblName = 'tbl_n{}_{}.txt'.format(prefix, variable)
         with open(tblName,'a') as f:
             tbl.to_string(f, index=True)
             f.write('\n')
@@ -67,7 +68,7 @@ def produceListOfTables(tbldir, variables):
     Return a list of txt files containing DataFrames
     '''
     
-    inFileNames = ['tbl_n_{0}.txt'.format(variable) for variable in variables]
+    inFileNames = glob.glob("tbl_n_*"+variables[0]+".txt")
     inFilePath  = [os.path.join(tbldir, fileName) for fileName in inFileNames]
     fileStatus  = [os.path.exists(fileName) for fileName in inFileNames]
     if not all(fileExists is True for fileExists in fileStatus):
