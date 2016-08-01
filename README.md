@@ -4,7 +4,8 @@ Miscellaneous pandas scripts
 ## Installation requirements
 
 Pandas and ROOT are required.
-ROOT can be installed via Homebrew, and Pandas can be installed via pip
+ROOT can be installed via Homebrew, and Pandas can be installed via pip.
+
 For ROOT:
 ```shell
 brew install cmake
