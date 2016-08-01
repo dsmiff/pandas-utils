@@ -56,8 +56,15 @@ def readTable(tbldir=None, tableString=None):
     '''
 
     if (tbldir and tableString) is None:
-        tableString = tbldir+ 'table_{0}.txt'.format(title)
-        
+        print('No directory or table given')
+    elif not os.path.exists(tbldir):
+        print('Dir {} not found'.format(tbldir))
+    else:
+        try:
+            tableString = os.path.join(tbldir, tableString)
+        except IOError:
+            print('Nothing found')
+
     d1 = pd.read_table(tableString, delim_whitespace=True)
     
     return d1
@@ -68,7 +75,7 @@ def produceListOfTables(tbldir, variables):
     Return a list of txt files containing DataFrames
     '''
     
-    inFileNames = glob.glob("tbl_n_*"+variables[0]+".txt")
+    inFileNames = glob.glob(os.path.join(tbldir,"tbl_n_*"+variables[0]+".txt"))
     inFilePath  = [os.path.join(tbldir, fileName) for fileName in inFileNames]
     fileStatus  = [os.path.exists(fileName) for fileName in inFileNames]
     if not all(fileExists is True for fileExists in fileStatus):
