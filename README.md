@@ -5,12 +5,13 @@ Miscellaneous pandas scripts
 
 Pandas and ROOT are required.
 ROOT can be installed via Homebrew, and Pandas can be installed via pip
+For ROOT:
 ```shell
 brew install cmake
 brew tap homebrew/science
 brew install root6
 ```
-for ROOT.
+For Pandas:
 
 ```shell
 pip install pandas
