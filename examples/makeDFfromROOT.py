@@ -1,6 +1,13 @@
 # Dominic Smith <dosmith@cern.ch>
 '''
 Make a Pandas DataFrame from a ROOT histogram
+
+Input argument should be a ROOT file containing a histogram.
+Information used to access the histogram:
+
+Variables: Accesses the distribution
+Samples:   Returns histogram from hDict
+Analyzer:  ""    ""
 '''
 
 import os, sys
