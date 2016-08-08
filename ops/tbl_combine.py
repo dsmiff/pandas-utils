@@ -21,18 +21,24 @@ def main():
     
     tbldir = args.dir
     outdir = args.outdir
-    tbl1 = 'tbl_n_SMS_out.txt'
-    tbl2 = 'tbl_n_out.txt'
-    variable = 'minChi'
-    d1 = readTable(tbldir, tbl1)
-    d2 = readTable(tbldir, tbl2)
+    variables = [
+        'jet40_minChi',
+        'biasedDPhi',
+        ]
 
-    d = pd.merge(d2,d1)
-    columns_to_rename = d.columns
-    for column in columns_to_rename:
-        d = d.rename(columns = {column: setProcessName(column)})
+    for variable in variables:
+        tbl1 = 'tbl_n_SMS_{}.txt'.format(variable)
+        tbl2 = 'tbl_n_{}.txt'.format(variable)
+        d1 = readTable(tbldir, tbl1)
+        d2 = readTable(tbldir, tbl2)
 
-    writeDFtoFile(d, variable, outdir, 'comb')
+        d = pd.merge(d2,d1)
+        columns_to_rename = d.columns
+
+        for column in columns_to_rename:
+            d = d.rename(columns = {column: setProcessName(column)})
+
+        writeDFtoFile(d, variable, outdir, 'comb')
 
 ##__________________________________________________________________||
 if __name__ == '__main__':
