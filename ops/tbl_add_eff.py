@@ -25,15 +25,19 @@ def main():
 
     tbldir = args.dir
     outdir = args.outdir
-    variables = ['jet40_minChi']
-    tblsList = produceListOfTables(tbldir, variables)
-    for tbl in tblsList:
-        varname = os.path.splitext(tbl)[0].split('_')[-1]
-        if 'SMS' in tbl.split("_"): prefix = '_SMS'
-        else: prefix = ''
-        d1 = readTable(tbldir, tbl)
-        d1_out = df_operation(d1, varname)
-        writeDFtoFile(d1_out, None, outdir, prefix)
+    variables = [
+                 'biasedDPhi',
+                 'jet40_minChi',]
+
+    for variable in variables:
+        tblsList = produceListOfTables(tbldir, variable)
+        for tbl in tblsList:
+            varname = os.path.splitext(tbl)[0].split('_')[-1]
+            if 'nSMS' in tbl.split("_"): prefix = '_SMS'
+            else: prefix = ''
+            d1 = readTable(None,tbl)
+            d1_out = df_operation(d1, varname)
+            writeDFtoFile(d1_out, variable, outdir, prefix)
 
 ##__________________________________________________________________||
 def split_process(tbl,varname):
