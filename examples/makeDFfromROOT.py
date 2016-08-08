@@ -53,6 +53,7 @@ def main():
     outdir   = args.outdir
 
     variables = ['jet40_minChi',
+                 'biasedDPhi',
                  ]
 
     signals = ['SMS-T1tttt_mGluino-1400_mLSP-100_25ns',
@@ -71,11 +72,16 @@ def main():
            'DYJetsToLL_M50_HT'
            ]
 
-    samples = QCD + EWK
-    
+    if 'SignalModels' in histdir: 
+        samples = signals
+        prefix = 'SMS'
+    else: 
+        samples = QCD + EWK
+        prefix = 'SM'
+
     for variable in variables:
         tbl = getHistogramDict(samples, variable, histdir, analyzer)
-        writeDFtoFile(tbl,variable,outdir) 
+        writeDFtoFile(tbl,variable,outdir,prefix)
 
 ##__________________________________________________________________||
 if __name__ == '__main__':
