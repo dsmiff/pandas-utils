@@ -38,15 +38,14 @@ def writeDFtoFile(tbl, variable, dir, prefix=None):
     '''
 
     if variable is None: variable = 'out'
-    if not os.path.exists(dir):
-        print("Undefined output directory")
-    else:        
-        tblName = 'tbl_n{}_{}.txt'.format(prefix, variable)
-        with open(tblName,'a') as f:
-            tbl.to_string(f, index=True)
-            f.write('\n')
-            f.close()
-            print('DataFrame {} written to file'.format(dir+tblName))
+    if not os.path.exists(dir): os.makedirs(dir)
+
+    tblName = os.path.join(dir,'tbl_n{}_{}.txt'.format(prefix, variable))
+    with open(tblName,'a') as f:
+        tbl.to_string(f, index=True)
+        f.write('\n')
+        f.close()
+        print('DataFrame {} written to file'.format(tblName))
     
 ##__________________________________________________________________||
 def readTable(tbldir=None, tableString=None):
@@ -54,29 +53,29 @@ def readTable(tbldir=None, tableString=None):
     Return a DataFrame given an input directory and 
     txt file name
     '''
-
-    if (tbldir and tableString) is None:
-        print('No directory or table given')
-    elif not os.path.exists(tbldir):
-        print('Dir {} not found'.format(tbldir))
-    else:
+    
+    if tbldir is not None:
+        if not os.path.exists(tbldir):
+            print('Dir {} not found'.format(tbldir))
         try:
             tableString = os.path.join(tbldir, tableString)
         except IOError:
-            print('Nothing found')
+            print("Nothing found")
+    else:
+        pass
 
     d1 = pd.read_table(tableString, delim_whitespace=True)
     
     return d1
 
 ##__________________________________________________________________||
-def produceListOfTables(tbldir, variables):
+def produceListOfTables(tbldir, variable):
     '''
     Return a list of txt files containing DataFrames
     '''
     
-    inFileNames = glob.glob(os.path.join(tbldir,"tbl_n_*"+variables[0]+".txt"))
-    inFilePath  = [os.path.join(tbldir, fileName) for fileName in inFileNames]
+    inFileNames = glob.glob(os.path.join(tbldir,"tbl_n*"+variable+".txt"))
+    inFilePath  = [fileName for fileName in inFileNames]
     fileStatus  = [os.path.exists(fileName) for fileName in inFileNames]
     if not all(fileExists is True for fileExists in fileStatus):
         print("Table not found")
