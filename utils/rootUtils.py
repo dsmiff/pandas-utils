@@ -5,6 +5,21 @@ A collection of ROOT utilities
 import ROOT as r
 
 ##__________________________________________________________________||
+class LambdaFunc(object):
+    '''
+    A class to define a lambda function given a string
+    '''
+
+    def __init__(self,inputStr):
+        self.inputStr = inputStr
+
+    def begin(self):
+        self.func = eval( 'lambda ' + self.inputStr )
+
+    def __call__(self,*item):
+        return self.func(*item)
+
+##__________________________________________________________________||
 def findObject(objects,name, dict):
     '''
     Find an object in a ROOT file
