@@ -51,6 +51,7 @@ def main():
     histdir  = args.input
     analyzer = args.analyzer
     outdir   = args.outdir
+    force    = args.force
 
     variables = ['jet40_minChi',
                  'biasedDPhi',
@@ -81,7 +82,7 @@ def main():
 
     for variable in variables:
         tbl = getHistogramDict(samples, variable, histdir, analyzer)
-        writeDFtoFile(tbl,variable,outdir,prefix)
+        writeDFtoFile(tbl,variable,outdir,prefix,force)
 
 ##__________________________________________________________________||
 if __name__ == '__main__':
