@@ -31,7 +31,7 @@ def convertDictToDF(infoDict, variable, assignIndexName=False):
     return d1
     
 ##__________________________________________________________________||
-def writeDFtoFile(tbl, variable, dir, prefix=None):
+def writeDFtoFile(tbl, variable, dir, prefix=None, force=False):
     '''
     Write a produced DataFrame to a txt file 
     given a variable name and output directory
@@ -41,6 +41,8 @@ def writeDFtoFile(tbl, variable, dir, prefix=None):
     if not os.path.exists(dir): os.makedirs(dir)
 
     tblName = os.path.join(dir,'tbl_n{}_{}.txt'.format(prefix, variable))
+    if force and os.path.exists(tblName): os.remove(tblName)
+
     with open(tblName,'a') as f:
         tbl.to_string(f, index=True)
         f.write('\n')
