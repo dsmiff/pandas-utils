@@ -5,6 +5,20 @@ A collection of ROOT utilities
 import ROOT as r
 
 ##__________________________________________________________________||
+class EndModule(object):
+    def __init__(self, name, debug=False):
+        self.debug = debug
+        
+    @staticmethod
+    def printInfo(info):
+        print('\n info \n')
+
+    def writeInfo(self, outPath=None):
+        writeDir = outPath if outPath else './'
+        textFile = open(writePath+'/outputInfo.txt', 'w')
+        textFile.close()
+
+##__________________________________________________________________||
 class LambdaFunc(object):
     '''
     A class to define a lambda function given a string
