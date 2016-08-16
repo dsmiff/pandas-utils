@@ -73,13 +73,12 @@ def convertToLatex(tbl, varible, writeFile=False):
     if is_empty:
         print("DataFrame is empty")
     else:
-        if not writeFile: return tbl.to_latex()
+        dl = tbl.to_latex()
+        if not writeFile: return dl
         else:
             with open('tbl_out.tex', 'w') as f:
-                f.write("\\begin{tabular}{" + " | ".join(["c"] * len(tbl.columns)) + "}\n")
-                for i, row in tbl.iterrows():
-                    f.write(" & ".join([str(x) for x in row.values]) + " \\\\\n")
-                f.write("\\end{tabular}")            
+                f.write(dl)
+                print("LaTex table saved")
 
 ##__________________________________________________________________||
 def readTable(tbldir=None, tableString=None):
