@@ -14,6 +14,19 @@ pd.set_option('display.max_rows', 65536)
 pd.set_option('display.width', 1000)
 
 ##__________________________________________________________________||
+class PandasChecker(object):
+    
+    def __init__(self):
+        pass
+
+    @staticmethod
+    def check_filled(tbl):
+        if tbl.empty:
+            return True
+        else:
+            return False
+
+##__________________________________________________________________||
 def convertDictToDF(infoDict, variable, assignIndexName=False):
     '''
     Convert a python dictionary to a DataFrame
@@ -49,6 +62,25 @@ def writeDFtoFile(tbl, variable, dir, prefix=None, force=False):
         f.close()
         print('DataFrame {} written to file'.format(tblName))
     
+##__________________________________________________________________||
+def convertToLatex(tbl, varible, writeFile=False):
+    '''
+    Convert a pandas DataFrame to a latex table
+    '''
+    pdscheck = PandasChecker()
+    is_empty = pdscheck.check_filled(tbl)
+    
+    if is_empty:
+        print("DataFrame is empty")
+    else:
+        if not writeFile: return tbl.to_latex()
+        else:
+            with open('tbl_out.tex', 'w') as f:
+                f.write("\\begin{tabular}{" + " | ".join(["c"] * len(tbl.columns)) + "}\n")
+                for i, row in tbl.iterrows():
+                    f.write(" & ".join([str(x) for x in row.values]) + " \\\\\n")
+                f.write("\\end{tabular}")            
+
 ##__________________________________________________________________||
 def readTable(tbldir=None, tableString=None):
     '''
