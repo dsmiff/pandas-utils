@@ -5,6 +5,21 @@ A collection of ROOT utilities
 import ROOT as r
 
 ##__________________________________________________________________||
+class FileChecker(object):
+    def __init__(self, filename):
+        pass
+
+    @staticmethod
+    def checkIfOK(filename):
+        isOK = False
+        if os.path.exists(os.path.abspath(filename)):
+            r.gErrorIgnoreLevel = r.kSysError
+            tf = r.TFile(os.path.abspath(filename), "READ")
+            if not (tf.IsZombie() or tf.TestBit(r.TFile.kRecovered)): isOK = True
+            tf.Close()
+        return isOK        
+
+##__________________________________________________________________||
 class EndModule(object):
     def __init__(self, name, debug=False):
         self.debug = debug
