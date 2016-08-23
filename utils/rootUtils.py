@@ -3,11 +3,37 @@ A collection of ROOT utilities
 '''
 
 import ROOT as r
+from collections import namedtuple
 
+##__________________________________________________________________||
+class RootTools(object):
+    def __init__(self, filename):
+        self.nullValue = 0.
+        
+    @staticmethod
+    def emptyHist(hist):
+        for xBin in range(1,hist.GetNbinsX()+1):
+            for yBin in range(1,hist.GetNbinsY()+1):
+                hist.SetBinContent(xBin, self.nullValue)
+                hist.SetBinError(xBin, self.nullValue)
+                
+    @staticmethod
+    def getHistBinning(hist):
+        binInfo = namedtuple("binInfo","filled nBinsX nBinsY binWidth")
+        nBinsX = hist.GetNbinsX()
+        nBinsY = hist.GetNbinsY()
+        binWidth = hist.GetBinWidth(1)
+        binInfo.nBinsX = nBinsX
+        binInfo.nBinsY = nBinsY
+        binInfo.binWidth = binWidth
+        if hist.GetEntries() >= 0.0: filled = True
+        else: filled = False
+        binInfo.filled = filled
+        return binInfo
+        
 ##__________________________________________________________________||
 class FileChecker(object):
     def __init__(self, filename):
-        self.nullValue = 0.
         pass
 
     @staticmethod
@@ -29,13 +55,6 @@ class FileChecker(object):
         else:
             isOK = True
         return isOK            
-
-    @staticmethod
-    def emptyHist(hist):
-        for xBin in range(1,hist.GetNbinsX()+1):
-            for yBin in range(1,hist.GetNbinsY()+1):
-                hist.SetBinContent(xBin, self.nullValue)
-                hist.SetBinError(xBin, self.nullValeu)
 
 ##__________________________________________________________________||
 class EndModule(object):
