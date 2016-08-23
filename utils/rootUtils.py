@@ -7,6 +7,7 @@ import ROOT as r
 ##__________________________________________________________________||
 class FileChecker(object):
     def __init__(self, filename):
+        self.nullValue = 0.
         pass
 
     @staticmethod
@@ -18,6 +19,23 @@ class FileChecker(object):
             if not (tf.IsZombie() or tf.TestBit(r.TFile.kRecovered)): isOK = True
             tf.Close()
         return isOK        
+
+    @staticmethod
+    def checkHistOk(hist):
+        isOK = False
+        nEntries = hist.GetEntries()
+        if nEntries is None:
+            print("Histogram is not filled")        
+        else:
+            isOK = True
+        return isOK            
+
+    @staticmethod
+    def emptyHist(hist):
+        for xBin in range(1,hist.GetNbinsX()+1):
+            for yBin in range(1,hist.GetNbinsY()+1):
+                hist.SetBinContent(xBin, self.nullValue)
+                hist.SetBinError(xBin, self.nullValeu)
 
 ##__________________________________________________________________||
 class EndModule(object):
