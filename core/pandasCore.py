@@ -25,12 +25,19 @@ class PandasChecker(object):
             return True
         else:
             return False
+        
+    @staticmethod
+    def is_dict_filled(infoDict):
+        return bool(infoDict)
 
 ##__________________________________________________________________||
 def convertDictToDF(infoDict, variable, assignIndexName=False):
     '''
     Convert a python dictionary to a DataFrame
     '''
+    pds_check = PandasChecker()
+    if not pds_check.is_dict_filled(infoDict):
+        print('Input dictionary is empty')
 
     d1 = pd.DataFrame.from_dict(infoDict)
     if d1.empty:
