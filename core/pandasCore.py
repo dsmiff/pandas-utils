@@ -37,7 +37,7 @@ def convertDictToDF(infoDict, variable, assignIndexName=False):
     '''
     pds_check = PandasChecker()
     if not pds_check.is_dict_filled(infoDict):
-        print('Input dictionary is empty')
+        raise Exception('Input dictionary is empty')
 
     d1 = pd.DataFrame.from_dict(infoDict)
     if d1.empty:
@@ -118,7 +118,7 @@ def produceListOfTables(tbldir, variable):
     inFilePath  = [fileName for fileName in inFileNames]
     fileStatus  = [os.path.exists(fileName) for fileName in inFileNames]
     if not all(fileExists is True for fileExists in fileStatus):
-        print("Table not found")
+        raise Exception("Table not found")
 
     return inFilePath
     
