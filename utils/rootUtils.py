@@ -1,3 +1,4 @@
+# Dominic Smith <dosmith@cern.ch>
 '''
 A collection of ROOT utilities
 '''
