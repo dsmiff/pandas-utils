@@ -7,6 +7,7 @@ perform Pandas operations
 import os
 import glob
 import pandas as pd
+import matplotlib as plt
 
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_colwidth', 4096)
@@ -137,3 +138,8 @@ def rearrangeColumns(tbl, varName):
     reordered_table = tbl[newCols]
 
     return reordered_table
+
+##__________________________________________________________________||
+def plotDF(df):
+    df.plot(kind='line', logx=True)
+    plt.show()
