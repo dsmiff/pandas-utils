@@ -23,3 +23,8 @@ Following which you can make a clone of this repository: ::
   git clone git@github.com:dsmiff/pandasUtils.git pandas-utils
   source setup.sh
 
+Cheatsheat
+-----------
+
+Taken from https://github.com/pandas-dev : 
+https://github.com/pandas-dev/pandas/blob/master/doc/cheatsheet/Pandas_Cheat_Sheet.pdf
