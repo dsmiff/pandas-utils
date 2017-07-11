@@ -6,7 +6,10 @@ perform Pandas operations
 
 import os
 import glob
-import pandas as pd
+try:
+    import pandas as pd
+except ImportError:
+    print "Unable to import Pandas"
 import matplotlib as plt
 
 pd.set_option('display.max_columns', None)
@@ -16,6 +19,9 @@ pd.set_option('display.width', 1000)
 
 ##__________________________________________________________________||
 class PandasChecker(object):
+    '''
+    Class to diagnose Dataframes
+    '''
     
     def __init__(self):
         pass
@@ -36,6 +42,7 @@ def convertDictToDF(infoDict, variable, assignIndexName=False):
     '''
     Convert a python dictionary to a DataFrame
     '''
+    
     pds_check = PandasChecker()
     if not pds_check.is_dict_filled(infoDict):
         raise Exception('Input dictionary is empty')
@@ -71,7 +78,7 @@ def writeDFtoFile(tbl, variable, dir, prefix=None, force=False):
         print('DataFrame {} written to file'.format(tblName))
     
 ##__________________________________________________________________||
-def convertToLatex(tbl, varible, writeFile=False):
+def convertToLatex(tbl, variable, writeFile=False):
     '''
     Convert a pandas DataFrame to a latex table
     '''
@@ -79,14 +86,14 @@ def convertToLatex(tbl, varible, writeFile=False):
     is_empty = pdscheck.check_filled(tbl)
     
     if is_empty:
-        print("DataFrame is empty")
+        raise ValueError("DataFrame is empty")
+
+    dl = tbl.to_latex()
+    if not writeFile: return dl
     else:
-        dl = tbl.to_latex()
-        if not writeFile: return dl
-        else:
-            with open('tbl_out.tex', 'w') as f:
-                f.write(dl)
-                print("LaTex table saved")
+        with open('tbl_out.tex', 'w') as f:
+            f.write(dl)
+        print("LaTex table saved")
 
 ##__________________________________________________________________||
 def readTable(tbldir=None, tableString=None):
