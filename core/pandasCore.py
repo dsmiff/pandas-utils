@@ -150,3 +150,5 @@ def rearrangeColumns(tbl, varName):
 def plotDF(df):
     df.plot(kind='line', logx=True)
     plt.show()
+
+    
