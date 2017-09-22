@@ -3,7 +3,10 @@
 A collection of ROOT utilities
 '''
 
-import ROOT as r
+try:
+    import ROOT as r
+except ImportError:
+    print "Unable to import ROOT"
 from collections import namedtuple
 
 ##__________________________________________________________________||

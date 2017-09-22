@@ -1,5 +1,4 @@
 import unittest
-import ROOT as r
 import os
 from core.pandasCore import * 
 import utils.rootUtils as rtUtils

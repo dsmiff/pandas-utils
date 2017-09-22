@@ -1,5 +1,8 @@
 import unittest
-import ROOT as r
+try:
+    import ROOT as r
+except ImportError:
+    print "Unable to import ROOT"
 import os
 from core.pandasCore import * 
 
