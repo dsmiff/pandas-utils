@@ -6,6 +6,7 @@ perform Pandas operations
 
 import os
 import glob
+
 try:
     import pandas as pd
 except ImportError:
@@ -17,6 +18,33 @@ pd.set_option('display.max_colwidth', 4096)
 pd.set_option('display.max_rows', 65536)
 pd.set_option('display.width', 1000)
 
+##__________________________________________________________________||
+class PandasHolder(object):
+    '''
+    Class to assign attributes to DataFrame
+    '''
+    def __init__(self, columns):
+        self.columns = columns
+
+    def makeDataFrame(self):
+        self.df = pd.DataFrame(columns=self.columns)
+
+    def fillDataFrame(self, info):
+        if isinstance(info,list):
+            for result in info:
+                self.df = self.df.append(result, ignore_index=True)
+
+    def plotDataFrame(self, variables):
+        try:
+            import matplotlib.pyplot as plt
+        except ImportError:
+            print "Unable to import matplotlib"
+        plt.plot(self.df[variables[0]], self.df[variables[1]])
+        plt.xlabel(r"{}".format(variables[0]))
+        plt.ylabel(r"$P$")
+        plt.minorticks_on()
+        plt.show()
+        
 ##__________________________________________________________________||
 class PandasChecker(object):
     '''

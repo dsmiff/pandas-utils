@@ -1,0 +1,13 @@
+       name  probability n_iterations n_shapes
+0     LOGAN       0.3000           10       50
+1       DOM       0.5000           10       50
+2   PAULINE       0.1000           10       50
+3     LOGAN       0.5000          100       50
+4       DOM       0.5900          100       50
+5   PAULINE       0.3500          100       50
+6     LOGAN       0.4270         1000       50
+7       DOM       0.6200         1000       50
+8   PAULINE       0.3400         1000       50
+9     LOGAN       0.4556        10000       50
+10      DOM       0.6301        10000       50
+11  PAULINE       0.3342        10000       50
